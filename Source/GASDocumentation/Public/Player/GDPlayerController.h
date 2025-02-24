@@ -5,7 +5,12 @@
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
 #include "Characters/GDCharacterBase.h"
+#include "InputMappingContext.h"
+#include "Input/GDInputConfig.h"
 #include "GDPlayerController.generated.h"
+
+
+//struct FInputActionValue;
 
 /**
  * 
@@ -45,4 +50,27 @@ protected:
 	virtual void OnPossess(APawn* InPawn) override;
 
 	virtual void OnRep_PlayerState() override;
+
+	virtual void SetupInputComponent() override;
+	virtual void BeginPlay() override;
+	void BindAbilitiesInput(UEnhancedInputComponent* EnhancedInputComponent);
+
+	void OnInputPress(FGameplayTag InputTag);
+	void OnInputHold(FGameplayTag InputTag);
+	void OnInputRelease(FGameplayTag InputTag);
+
+private :
+	UPROPERTY(EditAnywhere, Category="Input")
+	TObjectPtr<UInputMappingContext> MoveContext;
+
+	UPROPERTY(EditAnywhere, Category = "Input")
+	TObjectPtr<UInputAction> MoveAction;
+
+	UPROPERTY(EditAnywhere, Category = "Input")
+	TObjectPtr<UGDInputConfig> InputConfig;
+	
+	void Move(const FInputActionValue& Value);
+
+
 };
+

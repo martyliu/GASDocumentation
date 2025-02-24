@@ -4,7 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "Characters/GDCharacterBase.h"
+#include "InputMappingContext.h"
+
+//#include "../../../../../../../UE_5.3/Engine/Plugins/EnhancedInput/Source/EnhancedInput/Public/EnhancedActionKeyMapping.h"
 #include "GDHeroCharacter.generated.h"
+
 
 /**
  * A player or AI controlled hero character.
@@ -38,7 +42,12 @@ public:
 	USkeletalMeshComponent* GetGunComponent() const;
 
 	virtual void FinishDying() override;
+	
+	// Mouse + Gamepad
+	void MoveForward(float Value);
 
+	// Mouse + Gamepad
+	void MoveRight(float Value);
 protected:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "GASDocumentation|Camera")
 	float BaseTurnRate = 45.0f;
@@ -74,10 +83,18 @@ protected:
 
 	FGameplayTag DeadTag;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Action")
+	TObjectPtr<UInputMappingContext> IMC_Abilities;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Action")
+	TObjectPtr<UInputAction> IA_Fire;
+
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 	virtual void PostInitializeComponents() override;
+
+	void OnFire();
 
 	// Mouse
 	void LookUp(float Value);
@@ -91,11 +108,7 @@ protected:
 	// Gamepad
 	void TurnRate(float Value);
 
-	// Mouse + Gamepad
-	void MoveForward(float Value);
 
-	// Mouse + Gamepad
-	void MoveRight(float Value);
 
 	// Creates and initializes the floating status bar for heroes.
 	// Safe to call many times because it checks to make sure it only executes once.

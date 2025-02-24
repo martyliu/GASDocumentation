@@ -281,8 +281,9 @@ void AGDCharacterBase::AddCharacterAbilities()
 
 	for (TSubclassOf<UGDGameplayAbility>& StartupAbility : CharacterAbilities)
 	{
-		AbilitySystemComponent->GiveAbility(
-			FGameplayAbilitySpec(StartupAbility, GetAbilityLevel(StartupAbility.GetDefaultObject()->AbilityID), static_cast<int32>(StartupAbility.GetDefaultObject()->AbilityInputID), this));
+		FGameplayAbilitySpec spec = FGameplayAbilitySpec(StartupAbility, GetAbilityLevel(StartupAbility.GetDefaultObject()->AbilityID), static_cast<int32>(StartupAbility.GetDefaultObject()->AbilityInputID), this);
+		AbilitySystemComponent->GiveAbility(spec);
+		spec.DynamicAbilityTags.AddTag(StartupAbility.GetDefaultObject()->AbilityInputTag);
 	}
 
 	AbilitySystemComponent->bCharacterAbilitiesGiven = true;

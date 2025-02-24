@@ -61,8 +61,8 @@ void AGDHeroCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-	PlayerInputComponent->BindAxis("MoveForward", this, &AGDHeroCharacter::MoveForward);
-	PlayerInputComponent->BindAxis("MoveRight", this, &AGDHeroCharacter::MoveRight);
+	//PlayerInputComponent->BindAxis("MoveForward", this, &AGDHeroCharacter::MoveForward);
+	//PlayerInputComponent->BindAxis("MoveRight", this, &AGDHeroCharacter::MoveRight);
 
 	PlayerInputComponent->BindAxis("LookUp", this, &AGDHeroCharacter::LookUp);
 	PlayerInputComponent->BindAxis("LookUpRate", this, &AGDHeroCharacter::LookUpRate);
@@ -195,6 +195,11 @@ void AGDHeroCharacter::PostInitializeComponents()
 	}
 }
 
+void AGDHeroCharacter::OnFire()
+{
+
+}
+
 void AGDHeroCharacter::LookUp(float Value)
 {
 	if (IsAlive())
@@ -312,6 +317,8 @@ void AGDHeroCharacter::OnRep_PlayerState()
 
 void AGDHeroCharacter::BindASCInput()
 {
+	return;
+	
 	if (!ASCInputBound && AbilitySystemComponent.IsValid() && IsValid(InputComponent))
 	{
 		FTopLevelAssetPath AbilityEnumAssetPath = FTopLevelAssetPath(FName("/Script/GASDocumentation"), FName("EGDAbilityInputID"));
